@@ -1,15 +1,20 @@
-const slides = document.querySelectorAll('.slide')
+const jokeElement = document.getElementById('joke')
+const jokeBtn = document.getElementById('jokeBtn')
 
-slides.forEach(slide => {
-	slide.addEventListener('click', () => {
-		removeActiveClass()
-		slide.classList.add('active')
-	})
-});
+jokeBtn.addEventListener('click', generateJoke)
 
-function removeActiveClass() {
-	slides.forEach(slide => {
-		slide.classList.remove('active')
+generateJoke()
+
+function generateJoke() {
+	const config = {
+		headers: {
+			'Accept' : 'application/json'
+		}
+	}
+	fetch('https://icanhazdadjoke.com/', config)
+	.then((res) => res.json())
+	.then((data) => {
+		jokeElement.innerHTML = data.joke
 	})
+
 }
-
